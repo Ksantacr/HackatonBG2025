@@ -1,23 +1,26 @@
-using bg.hackathon.alphahackers.api.middleware;
+using Microsoft.AspNetCore.OpenApi;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+// Agregar servicios de Swagger
+builder.Services.AddEndpointsApiExplorer(); // Necesario para minimal APIs
+builder.Services.AddSwaggerGen(); // Configura Swagger
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configurar el pipeline de solicitudes HTTP
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseSwagger(); // Habilita la generación del documento OpenAPI
+    app.UseSwaggerUI(); // Habilita la interfaz de usuario de Swagger
 }
 
 app.UseHttpsRedirection();
 
-// Registrar el middleware de manejo de excepciones
-app.UseMiddleware<ExceptionMiddleware>();
+// Registrar el middleware de manejo de excepciones (si lo tienes)
+// app.UseMiddleware<ExceptionMiddleware>();
 
 var summaries = new[]
 {
@@ -26,7 +29,7 @@ var summaries = new[]
 
 app.MapGet("/weatherforecast", () =>
 {
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
+    var forecast = Enumerable.Range(1, 5).Select(index =>
         new WeatherForecast
         (
             DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
@@ -36,7 +39,8 @@ app.MapGet("/weatherforecast", () =>
         .ToArray();
     return forecast;
 })
-.WithName("GetWeatherForecast");
+.WithName("GetWeatherForecast")
+.WithOpenApi(); // Habilita la documentación OpenAPI para este endpoint
 
 app.Run();
 
