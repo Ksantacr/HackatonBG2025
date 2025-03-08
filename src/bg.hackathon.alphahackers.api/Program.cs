@@ -1,3 +1,5 @@
+using bg.hackathon.alphahackers.api.middleware;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -13,6 +15,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+// Registrar el middleware de manejo de excepciones
+app.UseMiddleware<ExceptionMiddleware>();
 
 var summaries = new[]
 {
