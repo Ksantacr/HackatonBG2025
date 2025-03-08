@@ -1,12 +1,410 @@
 openapi: '3.0.3'
 info:
-  title: Hackathon BG
-  version: '1.0'
+  title: Hackathon BG - Backend
+  description: API para obtener información del perfil de un cliente y sus productos.
+  version: 1.0.0
 servers:
-  - url: https://api.server.test/v1
+  - url: https://api.ejemplo.com/v1
+    description: Servidor de producción
+tags:
+  - name: Perfil
+    description: Operaciones relacionadas con el perfil del cliente
+  - name: Busqueda
+    description: Operaciones de búsqueda de empresas
+
 paths:
-  /test:
+  /info-perfil/:
     get:
+      summary: Obtener información del perfil del cliente y sus productos
+      description: Retorna la información del perfil del cliente y la lista de productos asociados.
+      tags:
+        - Perfil
+      parameters:
+        - name: id_cliente
+          in: header
+          description: ID del cliente
+          required: true
+          schema:
+            type: integer
+            example: 156464
       responses:
         '200':
-          description: OK
+          description: Información del perfil y productos obtenida exitosamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 200
+                  traceId:
+                    type: string
+                    example: "0HM1V2JL"
+                  data:
+                    type: object
+                    properties:
+                      info:
+                        type: object
+                        properties:
+                          id_cliente:
+                            type: integer
+                            example: 156464
+                          nombre:
+                            type: string
+                            example: "Contoso S.A."
+                          ruc:
+                            type: string
+                            example: "0987654321001"
+                          descripcion:
+                            type: string
+                            example: "Descripcion de la empresa"
+                          logo:
+                            type: string
+                            format: uri
+                            example: "https://www.contoso.com/logo.png"
+                          categoria:
+                            type: string
+                            example: "Medicina"
+                          calificacion:
+                            type: number
+                            format: float
+                            example: 4.5
+                          contactabilidad:
+                            type: object
+                            properties:
+                              pais:
+                                type: string
+                                example: "ecuador"
+                              ciudad:
+                                type: string
+                                example: "Guayaquil"
+                              provincia:
+                                type: string
+                                example: "Guayas"
+                              calle_principal:
+                                type: string
+                                example: "Av. 9 de Octubre"
+                              calle_secundaria:
+                                type: string
+                                example: "Av. Malecon"
+                              numero:
+                                type: string
+                                example: "1234"
+                              referencia:
+                                type: string
+                                example: "Frente al parque"
+                              latitud:
+                                type: number
+                                format: float
+                                example: -2.203816
+                              longitud:
+                                type: number
+                                format: float
+                                example: -79.897453
+                              email1:
+                                type: string
+                                example: ""
+                              email2:
+                                type: string
+                                example: ""
+                              telefono1:
+                                type: string
+                                example: ""
+                              telefono2:
+                                type: string
+                                example: ""
+                      productos:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            "idProducto":
+                              type: string
+                              format: guid
+                              example: "f7b3b2b1-5b7b-4b3b-8b7b-2b1b3b4b5b7b"
+                            nombre:
+                              type: string
+                              example: "Producto 1"
+                            precio:
+                              type: number
+                              format: float
+                              example: 100
+                            stock:
+                              type: integer
+                              example: 10
+                            descripcion:
+                              type: string
+                              example: "Descripcion del producto 1"
+                            categoria:
+                              type: string
+                              example: "Medicina"
+        '400':
+          description: Solicitud inválida
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                InvalidInput:
+                  $ref: '#/components/examples/InvalidInputExample'
+        '404':
+          description: Cliente no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                ClienteNoEncontrado:
+                  $ref: '#/components/examples/ClienteNoEncontradoExample'
+        '500':
+          description: Error interno del servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                InternalServerError:
+                  $ref: '#/components/examples/InternalServerErrorExample'
+  /buscar-empresas/:
+    get:
+      summary: Buscar empresas por nombre o categoría
+      description: |
+        Retorna una lista de empresas que coinciden con el nombre o categoría proporcionados.
+        Se pueden aplicar filtros opcionales de ubicación (país, ciudad, provincia).
+      tags:
+        - Busqueda
+      parameters:
+        - name: query
+          in: query
+          description: |
+            Término de búsqueda para nombre o categoría.
+            Ejemplo: Si se busca "Contoso" o "Medicina", se devolverán empresas que coincidan con cualquiera de los dos.
+          required: true
+          schema:
+            type: string
+          example: "Contoso"
+        - name: pais
+          in: query
+          description: Filtro opcional por país.
+          required: false
+          schema:
+            type: string
+          example: "Ecuador"
+        - name: ciudad
+          in: query
+          description: Filtro opcional por ciudad.
+          required: false
+          schema:
+            type: string
+          example: "Guayaquil"
+        - name: provincia
+          in: query
+          description: Filtro opcional por provincia.
+          required: false
+          schema:
+            type: string
+          example: "Guayas"
+      responses:
+        '200':
+          description: Lista de empresas encontradas
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 200
+                  traceId:
+                    type: string
+                    example: "0HM1V2JL"
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id_cliente:
+                          type: integer
+                          example: 156464
+                        nombre:
+                          type: string
+                          example: "Contoso S.A."
+                        descripcion:
+                          type: string
+                          example: "Descripción de la empresa."
+                        categoria:
+                          type: string
+                          example: "Medicina"
+                        logo:
+                          type: string
+                          format: uri
+                          example: "https://www.contoso.com/logo.png"
+                        calificacion:
+                          type: number
+                          format: float
+                          example: 4.5
+                        ubicacion:
+                          type: object
+                          properties:
+                            pais:
+                              type: string
+                              example: "Ecuador"
+                            ciudad:
+                              type: string
+                              example: "Guayaquil"
+                            provincia:
+                              type: string
+                              example: "Guayas"
+                            calle_principal:
+                              type: string
+                              example: "Av. 9 de Octubre"
+                            calle_secundaria:
+                              type: string
+                              example: "Av. Malecon"
+        '400':
+          description: Solicitud inválida (por ejemplo, falta el parámetro de búsqueda)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                InvalidInput:
+                  $ref: '#/components/examples/InvalidInputExample'
+        '500':
+          description: Error interno del servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                InternalServerError:
+                  $ref: '#/components/examples/InternalServerErrorExample'
+
+  /linea-credito/:
+    get:
+      summary: Obtener información de la línea de crédito de un cliente
+      description: Retorna los detalles de la línea de crédito asociada a un cliente, incluyendo total, utilizado, disponible y estado.
+      tags:
+        - Perfil
+      parameters:
+        - name: id_cliente
+          in: header
+          required: true
+          description: ID del cliente para consultar su línea de crédito.
+          schema:
+            type: integer
+            example: 156464
+      responses:
+        '200':
+          description: Línea de crédito obtenida exitosamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 200
+                  traceId:
+                    type: string
+                    example: "0HM1V2JL"
+                  data:
+                    type: object
+                    properties:
+                      id_cliente:
+                        type: integer
+                        example: 156464
+                      total_credito:
+                        type: number
+                        format: float
+                        example: 50000.00
+                        description: Límite total de la línea de crédito.
+                      utilizado:
+                        type: number
+                        format: float
+                        example: 12000.50
+                        description: Monto utilizado de la línea de crédito.
+                      disponible:
+                        type: number
+                        format: float
+                        example: 37999.50
+                        description: Monto disponible (total - utilizado).
+                      moneda:
+                        type: string
+                        example: "USD"
+                        description: Moneda de la línea de crédito.
+                      fecha_inicio:
+                        type: string
+                        format: date
+                        example: "2023-01-01"
+                      fecha_vencimiento:
+                        type: string
+                        format: date
+                        example: "2024-12-31"
+                      estado:
+                        type: string
+                        enum: [ACTIVO, VENCIDO, BLOQUEADO]
+                        example: "ACTIVO"
+       
+components:
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: Código de estado HTTP.
+          example: 400
+        traceId:
+          type: string
+          description: Identificador único para rastrear la solicitud.
+          example: "0HM1V2JL"
+        message:
+          type: string
+          description: Mensaje general del error.
+          example: "El campo id_cliente es requerido."
+        errors:
+          type: array
+          description: Lista de errores detallados.
+          items:
+            $ref: '#/components/schemas/ErrorDetail'
+    ErrorDetail:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: Código de error personalizado.
+          example: 1001
+        message:
+          type: string
+          description: Mensaje específico del error.
+          example: "El id_cliente debe ser mayor que 0."
+  examples:
+    InvalidInputExample:
+      summary: Ejemplo de error de solicitud inválida
+      value:
+        code: 400
+        traceId: "0HM1V2JL"
+        message: "El campo id_cliente es requerido."
+        errors:
+          - code: 1001
+            message: "El id_cliente debe ser mayor que 0."
+    ClienteNoEncontradoExample:
+      summary: Ejemplo de error de cliente no encontrado
+      value:
+        code: 404
+        traceId: "0HM1V2JL"
+        message: "Cliente no encontrado."
+        errors:
+          - code: 1002
+            message: "No se encontró un cliente con el id_cliente proporcionado."
+    InternalServerErrorExample:
+      summary: Ejemplo de error interno del servidor
+      value:
+        code: 500
+        traceId: "0HM1V2JL"
+        message: "An error occurred while processing your request."
+        errors:
+          - code: 1003
+            message: "Error al consultar la base de datos."
