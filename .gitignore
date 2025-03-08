@@ -361,3 +361,8 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Mockups 
+mockups/
+/src/bg.hackathon.alphahackers.api/appsettings.json
+/src/bg.hackathon.alphahackers.api/appsettings.Development.json
