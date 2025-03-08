@@ -15,4 +15,8 @@
     <ProjectReference Include="..\bg.hackathon.alphahackers.infrastructure\bg.hackathon.alphahackers.infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="controller\" />
+  </ItemGroup>
+
 </Project>
