@@ -1,12 +1,14 @@
-using Microsoft.AspNetCore.OpenApi;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+using bg.hackathon.alphahackers.api.middleware;
+using bg.hackathon.alphahackers.infrastructure.ioc;
+using bg.hackathon.alphahackers.application.ioc;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Agregar servicios de Swagger
 builder.Services.AddEndpointsApiExplorer(); // Necesario para minimal APIs
 builder.Services.AddSwaggerGen(); // Configura Swagger
+builder.Services.AddInfrastructureServices(builder.Configuration);
+builder.Services.AddApplicationServices();
 
 var app = builder.Build();
 
@@ -20,7 +22,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 // Registrar el middleware de manejo de excepciones (si lo tienes)
-// app.UseMiddleware<ExceptionMiddleware>();
+app.UseMiddleware<ExceptionMiddleware>();
 
 var summaries = new[]
 {
