@@ -8,6 +8,17 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Configurar servicios
 builder.Services.AddControllers();  // Habilitar controladores MVC
+// Configurar CORS para permitir cualquier origen
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins", builder =>
+    {
+        builder.AllowAnyOrigin()   // Permitir cualquier origen
+               .AllowAnyMethod()   // Permitir cualquier verbo HTTP
+               .AllowAnyHeader();  // Permitir cualquier encabezado
+    });
+});
+
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
@@ -17,6 +28,7 @@ builder.Services.AddSwaggerGen(c =>
         Description = "API para gestión de clientes y productos"
     });
 });
+builder.Services.AddAWSLambdaHosting(LambdaEventSource.RestApi);
 
 // Configurar dependencias
 builder.Services.AddInfrastructureServices(builder.Configuration);
@@ -37,6 +49,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseRouting();
+// Aplicar CORS justo después del enrutamiento
+app.UseCors("AllowAllOrigins");
 
 // Middlewares personalizados
 app.UseMiddleware<ExceptionMiddleware>();
