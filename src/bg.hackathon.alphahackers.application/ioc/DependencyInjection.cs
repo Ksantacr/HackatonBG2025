@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using bg.hackathon.alphahackers.application.data.interfaces.services;
+using bg.hackathon.alphahackers.application.data.services;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace bg.hackathon.alphahackers.application.ioc
 {
@@ -6,6 +8,9 @@ namespace bg.hackathon.alphahackers.application.ioc
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
+            
+            services.AddScoped<ILineaCreditoServices, LineaCreditoServices>();
+
             return services;
         }
     }

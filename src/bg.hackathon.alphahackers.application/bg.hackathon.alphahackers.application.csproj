@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="data\repositories\" />
+    <Folder Include="models\dtos\" />
   </ItemGroup>
 
   <PropertyGroup>
