@@ -29,10 +29,10 @@ namespace bg.hackathon.alphahackers.infrastructure.data.repositories
 
             var body = new
             {
-                query, // "query" siempre se incluye porque es un parámetro requerido
-                ciudad = ciudad != null ? ciudad : null, // Incluir solo si no es nulo
-                pais = pais != null ? pais : null,       // Incluir solo si no es nulo
-                provincia = provincia != null ? provincia : null // Incluir solo si no es nulo
+                query = query, 
+                ciudad = ciudad != null ? ciudad : null,    
+                pais = pais != null ? pais : null,       
+                provincia = provincia != null ? provincia : null 
             };
 
             try

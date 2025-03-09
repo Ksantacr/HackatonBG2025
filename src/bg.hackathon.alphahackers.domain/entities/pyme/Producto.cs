@@ -2,7 +2,8 @@
 {
     public class Producto
     {
-        public Guid Id { get; set; }
+        public int Id_Cliente { get; set; }
+        public Guid Id_Producto { get; set; }
         public string Nombre { get; set; } = string.Empty;
         public decimal Precio { get; set; }
         public int Stock { get; set; }

@@ -9,7 +9,7 @@ namespace bg.hackathon.alphahackers.application.models.dtos
 
     public class ClienteDTo
     {
-        public int IdCliente { get; set; }
+        public int Id_Cliente { get; set; }
         public string Nombre { get; set; }
         public string Descripcion { get; set; }
         public string Categoria { get; set; }

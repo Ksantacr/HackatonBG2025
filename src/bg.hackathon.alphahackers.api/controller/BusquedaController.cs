@@ -23,7 +23,7 @@ namespace bg.hackathon.alphahackers.api.controller
         [Route("buscar-empresas")]
         [ProducesResponseType(typeof(MsDtoResponse<List<ClienteDTo>>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> ObtenerPerfil([FromQuery][Required]string query, [FromQuery][Optional]string? pais, [FromQuery][Optional]string? ciudad, [FromQuery][Optional] string? provincia)
+        public async Task<IActionResult> ObtenerPerfil([FromQuery][Optional]string? query, [FromQuery][Optional]string? pais, [FromQuery][Optional]string? ciudad, [FromQuery][Optional] string? provincia)
         {
             var response = await _busquedaServices.ObtenerBusqueda(query,ciudad,pais,provincia);
             return Ok(new MsDtoResponse<List<ClienteDTo>>(HttpContext.TraceIdentifier, response));

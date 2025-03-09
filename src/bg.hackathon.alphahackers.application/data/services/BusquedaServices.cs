@@ -16,7 +16,7 @@ namespace bg.hackathon.alphahackers.application.data.services
             _busquedaRepository = busquedaRepository;
         }
 
-        public async Task<List<ClienteDTo>> ObtenerBusqueda(string query, string? ciudad, string? pais, string? provincia)
+        public async Task<List<ClienteDTo>> ObtenerBusqueda(string? query, string? ciudad, string? pais, string? provincia)
         {
             var result = await _busquedaRepository.ObtenerBusqueda(query, ciudad, pais, provincia);
 
