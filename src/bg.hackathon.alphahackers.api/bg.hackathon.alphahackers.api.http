@@ -1,6 +1,0 @@
-@bg.hackathon.alphahackers.api_HostAddress = http://localhost:5079
-
-GET {{bg.hackathon.alphahackers.api_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

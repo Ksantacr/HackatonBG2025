@@ -17,6 +17,11 @@ namespace bg.hackathon.alphahackers.api.controller
             _perfilServices = perfilServices;
         }
 
+        /// <summary>
+        /// Retorna los detalles de la línea de crédito asociada a un cliente, incluyendo total, utilizado, disponible y estado.
+        /// </summary>
+        /// <param name="codigo_cliente" example="1123">ID del cliente para consultar su línea de crédito.</param>
+        /// <returns></returns>
         [HttpGet]
         [Produces("application/json")]
         [Route("linea-credito")]
@@ -28,6 +33,11 @@ namespace bg.hackathon.alphahackers.api.controller
             return Ok(new MsDtoResponse<LineaCredito>(HttpContext.TraceIdentifier, response));
         }
 
+        /// <summary>
+        /// Retorna la información del perfil del cliente y la lista de productos asociados.
+        /// </summary>
+        /// <param name="codigo_cliente" example="1123">ID del cliente</param>
+        /// <returns></returns>
         [HttpGet]
         [Route("info-perfil")]
         [Produces("application/json")]

@@ -18,6 +18,15 @@ namespace bg.hackathon.alphahackers.api.controller
         {
             _busquedaServices = busquedaServices;
         }
+
+        /// <summary>
+        /// Retorna una lista de empresas que coinciden con el nombre o categoría proporcionados. Se pueden aplicar filtros opcionales de ubicación (país, ciudad, provincia).
+        /// </summary>
+        /// <param name="query">Filtro Opcional término de búsqueda para nombre o categoría. Ejemplo: Si se busca "Contoso" o "Medicina", se devolverán empresas que coincidan con cualquiera de los dos.</param>
+        /// <param name="pais">Filtro opcional por país.</param>
+        /// <param name="ciudad">Filtro opcional por ciudad.</param>
+        /// <param name="provincia">Filtro opcional por provincia.</param>
+        /// <returns></returns>
         [HttpGet]
         [Produces("application/json")]
         [Route("buscar-empresas")]

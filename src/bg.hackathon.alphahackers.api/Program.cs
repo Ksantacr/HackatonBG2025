@@ -16,6 +16,9 @@ builder.Services.AddSwaggerGen(c =>
         Version = "v1",
         Description = "API para gestión de clientes y productos"
     });
+
+    var xmlFilename = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
 });
 
 // Configurar dependencias
