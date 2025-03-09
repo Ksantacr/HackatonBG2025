@@ -16,6 +16,7 @@ namespace bg.hackathon.alphahackers.api.controller
         [HttpGet]
         [Route("linea-credito")]
         [ProducesResponseType(typeof(MsDtoResponse<LineaCredito>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> ObtenerLineaCredito(int codigo_cliente)
         {
             var response = await _lineaCreditoServices.ObtenerLineaCredito(codigo_cliente);
