@@ -27,6 +27,10 @@ La plataforma **PymeGo** busca ser un canal seguro y robusto para que los empren
 
 ---
 
+![alt text](image.png)
+
+Arquitectura del flujo de trabajo.
+
 ## Arquitectura
 
 Este proyecto se basa en **Domain-Driven Design (DDD)**, utilizando patrones típicos de esta metodología:
@@ -75,11 +79,11 @@ Además, el proyecto aprovecha **AWS API Gateway** para comunicarse con servicio
      - `AWS_ACCESS_KEY_ID`
      - `AWS_SECRET_ACCESS_KEY`
      - `AWS_REGION`
-   - URL o ARN del AWS API Gateway que vayas a consumir:  
+   - URL o ARN del AWS API Gateway que vayas a consumir:
      - `AWS_API_GATEWAY_URL`
 
-3. **Instalar dependencias**:  
-   Si usas Visual Studio, estas se restauran automáticamente al abrir la solución.  
+3. **Instalar dependencias**:
+   Si usas Visual Studio, estas se restauran automáticamente al abrir la solución.
    Desde la CLI, en la carpeta raíz del proyecto:
 
    ```bash
@@ -157,5 +161,5 @@ Este proyecto se desarrolla para la competencia interna del **Banco Guayaquil**,
 
 ---
 
-¡Gracias por tu interés en el proyecto **bg.hackathon.alphahackers** y en la plataforma **PymeGo**!  
+¡Gracias por tu interés en el proyecto **bg.hackathon.alphahackers** y en la plataforma **PymeGo**!
 Si tienes dudas o sugerencias, no dudes en abrir un issue o enviar un Pull Request.
