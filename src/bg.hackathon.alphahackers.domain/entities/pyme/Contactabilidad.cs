@@ -2,7 +2,6 @@
 {
     public class Contactabilidad
     {
-        public Guid Id { get; set; }
         public string Pais { get; set; } = string.Empty;
         public string Ciudad { get; set; } = string.Empty;
         public string Provincia { get; set; } = string.Empty;
@@ -16,7 +15,5 @@
         public string Email2 { get; set; } = string.Empty;
         public string Telefono1 { get; set; } = string.Empty;
         public string Telefono2 { get; set; } = string.Empty;
-        public int ClienteId { get; set; }
-        public Cliente Cliente { get; set; } = new();
     }
 }

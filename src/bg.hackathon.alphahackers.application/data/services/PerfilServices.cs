@@ -1,29 +1,34 @@
-﻿using bg.hackathon.alphahackers.application.data.interfaces.repositories;
+﻿using bg.hackathon.alphahackers.application.constants;
+using bg.hackathon.alphahackers.application.data.interfaces.repositories;
 using bg.hackathon.alphahackers.application.data.interfaces.services;
+using bg.hackathon.alphahackers.application.exceptions;
 using bg.hackathon.alphahackers.domain.entities.pyme;
 
 namespace bg.hackathon.alphahackers.application.data.services
 {
     public class PerfilServices : IPerfilServices
     {
-        private readonly IPerfilRepository _lineaCreditoRepository;
+        private readonly IPerfilRepository _perfilRepository;
 
-        public PerfilServices(IPerfilRepository lineaCreditoRepository)
+        public PerfilServices(IPerfilRepository perfilRepository)
         {
-            _lineaCreditoRepository = lineaCreditoRepository;
+            _perfilRepository = perfilRepository;
         }
 
         public async Task<LineaCredito> ObtenerLineaCredito(int codigo_cliente)
         {
 
-            var result = await _lineaCreditoRepository.ObtenerLineaCredito(codigo_cliente);
-            return result;
+            var result = await _perfilRepository.ObtenerLineaCredito(codigo_cliente);
 
+            return result == null ? throw new NotFoundException(GlobalConstant.MSG_NOT_FOUND) : result;
         }
 
-        public Task<Cliente> ObtenerPerfil(int codigo_cliente)
+        public async Task<Cliente> ObtenerPerfil(int codigo_cliente)
         {
-            throw new NotImplementedException();
+
+            var result = await _perfilRepository.ObtenerPerfil(codigo_cliente);
+
+            return result == null ? throw new NotFoundException(GlobalConstant.MSG_NOT_FOUND) : result;
         }
     }
 }

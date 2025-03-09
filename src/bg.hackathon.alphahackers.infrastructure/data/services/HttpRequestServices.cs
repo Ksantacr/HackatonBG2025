@@ -158,7 +158,10 @@ namespace bg.hackathon.alphahackers.infrastructure.data.services
 
             if (content != null && (method == HttpMethod.Post || method == HttpMethod.Put))
             {
-                var jsonContent = JsonConvert.SerializeObject(content);
+                var jsonContent = JsonConvert.SerializeObject(content, new JsonSerializerSettings
+                {
+                    NullValueHandling = NullValueHandling.Ignore
+                });
                 requestMessage.Content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
             }
 

@@ -20,6 +20,7 @@ namespace bg.hackathon.alphahackers.infrastructure.ioc
 
             // repositorios
             services.AddScoped<IPerfilRepository, PerfilRepository>();
+            services.AddScoped<IBusquedaRepository, BusquedaRepository>();
 
 
             return services;

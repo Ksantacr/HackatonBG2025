@@ -17,7 +17,5 @@ namespace bg.hackathon.alphahackers.domain.entities.pyme
         public DateTime FechaInicio { get; set; }
         public DateTime FechaVencimiento { get; set; }
         public EstadoLineaCredito Estado { get; set; }
-        public int ClienteId { get; set; }
-        public Cliente Cliente { get; set; } = new();
     }
 }

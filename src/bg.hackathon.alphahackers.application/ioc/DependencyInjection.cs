@@ -10,6 +10,7 @@ namespace bg.hackathon.alphahackers.application.ioc
         {
             
             services.AddScoped<IPerfilServices, PerfilServices>();
+            services.AddScoped<IBusquedaServices, BusquedaServices>();
 
             return services;
         }

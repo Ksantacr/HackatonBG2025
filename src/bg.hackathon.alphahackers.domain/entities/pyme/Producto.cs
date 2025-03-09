@@ -8,8 +8,5 @@
         public int Stock { get; set; }
         public string Descripcion { get; set; } = string.Empty;
         public string Categoria { get; set; } = string.Empty;
-
-        public int ClienteId { get; set; }
-        public Cliente Cliente { get; set; } = new();
     }
 }

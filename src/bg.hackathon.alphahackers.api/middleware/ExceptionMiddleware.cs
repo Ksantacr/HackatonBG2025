@@ -1,6 +1,12 @@
-﻿using bg.hackathon.alphahackers.domain.models;
+﻿using System;
+using System.Diagnostics;
 using System.Net;
 using System.Text.Json;
+using bg.hackathon.alphahackers.application.constants;
+using bg.hackathon.alphahackers.application.exceptions;
+using bg.hackathon.alphahackers.domain.models;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 
 namespace bg.hackathon.alphahackers.api.middleware
 {
@@ -21,38 +27,42 @@ namespace bg.hackathon.alphahackers.api.middleware
             {
                 await _next(context);
             }
+            catch (InternalException ex)
+            {
+                await HandleExceptionAsync(context, ex, HttpStatusCode.InternalServerError, GlobalConstant.ERROR_CODE_INTERNAL,GlobalConstant.MSG_ERROR_INTERNO);
+            }
+            catch (NotFoundException ex)
+            {
+                await HandleExceptionAsync(context, ex, HttpStatusCode.NotFound, GlobalConstant.ERROR_CODE_NOT_FOUND,GlobalConstant.MSG_ERROR_NOT_FOUND);
+            }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An unhandled exception has occurred.");
-                await HandleExceptionAsync(context, ex); //ejemplo
+                await HandleExceptionAsync(context, ex, HttpStatusCode.InternalServerError, GlobalConstant.ERROR_CODE_INTERNAL,GlobalConstant.MSG_ERROR_INTERNO);
             }
         }
 
-        private static Task HandleExceptionAsync(HttpContext context, Exception exception)
+        private static async Task HandleExceptionAsync(HttpContext context, Exception exception, HttpStatusCode statusCode, string errorCode, string error_message)
         {
             context.Response.ContentType = "application/json";
-            context.Response.StatusCode = (int)HttpStatusCode.BadRequest; // 400
+            context.Response.StatusCode = (int)statusCode;
 
-            var traceId = context.TraceIdentifier; // Obtiene el TraceId generado por ASP.NET Core
-
-            // Crear la respuesta usando la clase del dominio
             var response = new ErrorResponse
             {
-                Code = context.Response.StatusCode,
-                TraceId = traceId,
-                Message = "An error occurred while processing your request.",
+                Code = (int)statusCode,
+                TraceId = context.TraceIdentifier,
+                Message = error_message,
                 Errors = new List<ErrorDetail>
                 {
                     new ErrorDetail
                     {
-                        Code = 1001, // Código de error personalizado
-                        Message = exception.Message // Mensaje de la excepción
-                    }
-                }
+                        Code = errorCode,
+                        Message = exception.Message,
+                    },
+                },
             };
 
             var jsonResponse = JsonSerializer.Serialize(response);
-            return context.Response.WriteAsync(jsonResponse);
+            await context.Response.WriteAsync(jsonResponse);
         }
     }
 }

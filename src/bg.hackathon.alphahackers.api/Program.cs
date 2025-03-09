@@ -4,6 +4,8 @@ using bg.hackathon.alphahackers.application.ioc;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+
 // Configurar servicios
 builder.Services.AddControllers();  // Habilitar controladores MVC
 builder.Services.AddSwaggerGen(c =>

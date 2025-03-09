@@ -1,5 +1,7 @@
-﻿using bg.hackathon.alphahackers.application.data.interfaces.repositories;
+﻿using bg.hackathon.alphahackers.application.constants;
+using bg.hackathon.alphahackers.application.data.interfaces.repositories;
 using bg.hackathon.alphahackers.application.data.interfaces.services;
+using bg.hackathon.alphahackers.application.exceptions;
 using bg.hackathon.alphahackers.domain.entities.pyme;
 using Microsoft.Extensions.Configuration;
 
@@ -32,7 +34,7 @@ namespace bg.hackathon.alphahackers.infrastructure.data.repositories
             {
                 var result = await _httpRequestService.ExecuteRestRequestAsync<LineaCredito, LineaCredito>(
                     url,
-                    HttpMethod.Get,
+                    HttpMethod.Post,
                     content : body
                 );
 
@@ -40,13 +42,32 @@ namespace bg.hackathon.alphahackers.infrastructure.data.repositories
             }
             catch (Exception ex)
             {
-                throw;
+                throw new InternalException(GlobalConstant.MSG_ERROR, ex);
             }
         }
 
-        public Task<Cliente> ObtenerPerfil(int codigo_cliente)
+        public async Task<Cliente> ObtenerPerfil(int codigo_cliente)
         {
-            throw new NotImplementedException();
+            var url = _configuration["Aws:ApiGateway:InfoPerfil:url"];
+
+            var body = new
+            {
+                id_cliente = codigo_cliente.ToString()
+            };
+
+            try
+            {
+                var result = await _httpRequestService.ExecuteRestRequestAsync<Cliente, Cliente>(
+                    url,
+                    HttpMethod.Post,
+                    content: body
+                );
+
+                return result;
+            }catch(Exception ex)
+            {
+                throw new InternalException(GlobalConstant.MSG_ERROR,ex);
+            }
         }
     }
 }
