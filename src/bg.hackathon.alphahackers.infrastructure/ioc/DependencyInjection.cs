@@ -1,6 +1,5 @@
 ﻿using bg.hackathon.alphahackers.application.data.interfaces.repositories;
 using bg.hackathon.alphahackers.application.data.interfaces.services;
-using bg.hackathon.alphahackers.infrastructure.data.context;
 using bg.hackathon.alphahackers.infrastructure.data.repositories;
 using bg.hackathon.alphahackers.infrastructure.data.services;
 using Microsoft.EntityFrameworkCore;
@@ -13,8 +12,6 @@ namespace bg.hackathon.alphahackers.infrastructure.ioc
     {
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<AppDbContext>(options =>
-                options.UseNpgsql(configuration.GetConnectionString("PostgresConnection")));
 
             services.AddHttpClient();
 
@@ -22,7 +19,7 @@ namespace bg.hackathon.alphahackers.infrastructure.ioc
             services.AddScoped<IHttpRequestService, HttpRequestService>();
 
             // repositorios
-            services.AddScoped<ILineaCreditoRepository, LineaCreditoRepository>();
+            services.AddScoped<IPerfilRepository, PerfilRepository>();
 
 
             return services;

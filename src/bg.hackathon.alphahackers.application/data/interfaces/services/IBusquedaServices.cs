@@ -2,8 +2,8 @@
 
 namespace bg.hackathon.alphahackers.application.data.interfaces.services
 {
-    public interface ILineaCreditoServices
+    public interface IBusquedaServices
     {
-        Task<LineaCredito> ObtenerLineaCredito(int codigo_cliente);
+        Task<Cliente> ObtenerBusqueda(string query, string? ciudad, string? pais, string? provincia);
     }
 }

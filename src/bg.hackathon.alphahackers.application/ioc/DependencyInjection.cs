@@ -9,7 +9,7 @@ namespace bg.hackathon.alphahackers.application.ioc
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
             
-            services.AddScoped<ILineaCreditoServices, LineaCreditoServices>();
+            services.AddScoped<IPerfilServices, PerfilServices>();
 
             return services;
         }

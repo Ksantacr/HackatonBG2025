@@ -4,11 +4,11 @@ using bg.hackathon.alphahackers.domain.entities.pyme;
 
 namespace bg.hackathon.alphahackers.application.data.services
 {
-    public class LineaCreditoServices : ILineaCreditoServices
+    public class PerfilServices : IPerfilServices
     {
-        private readonly ILineaCreditoRepository _lineaCreditoRepository;
+        private readonly IPerfilRepository _lineaCreditoRepository;
 
-        public LineaCreditoServices(ILineaCreditoRepository lineaCreditoRepository)
+        public PerfilServices(IPerfilRepository lineaCreditoRepository)
         {
             _lineaCreditoRepository = lineaCreditoRepository;
         }
@@ -19,6 +19,11 @@ namespace bg.hackathon.alphahackers.application.data.services
             var result = await _lineaCreditoRepository.ObtenerLineaCredito(codigo_cliente);
             return result;
 
+        }
+
+        public Task<Cliente> ObtenerPerfil(int codigo_cliente)
+        {
+            throw new NotImplementedException();
         }
     }
 }

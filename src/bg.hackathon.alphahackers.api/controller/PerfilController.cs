@@ -6,12 +6,16 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace bg.hackathon.alphahackers.api.controller
 {
-    [Route("api/[controller]")]
+    [Route("")]
     [ApiController]
     public class PerfilController : ControllerBase
     {
-        private readonly ILineaCreditoServices _lineaCreditoServices;
+        private readonly IPerfilServices _lineaCreditoServices;
 
+        public PerfilController(IPerfilServices lineaCreditoServices)
+        {
+            _lineaCreditoServices = lineaCreditoServices;
+        }
 
         [HttpGet]
         [Route("linea-credito")]

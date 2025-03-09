@@ -5,12 +5,12 @@ using Microsoft.Extensions.Configuration;
 
 namespace bg.hackathon.alphahackers.infrastructure.data.repositories
 {
-    public class LineaCreditoRepository : ILineaCreditoRepository
+    public class PerfilRepository : IPerfilRepository
     {
         private readonly IConfiguration _configuration;
         private readonly IHttpRequestService _httpRequestService;
 
-        public LineaCreditoRepository(
+        public PerfilRepository(
             IConfiguration configuration,
             IHttpRequestService httpRequestService
         )
@@ -42,6 +42,11 @@ namespace bg.hackathon.alphahackers.infrastructure.data.repositories
             {
                 throw;
             }
+        }
+
+        public Task<Cliente> ObtenerPerfil(int codigo_cliente)
+        {
+            throw new NotImplementedException();
         }
     }
 }
