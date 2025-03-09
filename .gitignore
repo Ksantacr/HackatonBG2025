@@ -364,5 +364,5 @@ FodyWeavers.xsd
 
 # Mockups 
 mockups/
-/src/bg.hackathon.alphahackers.api/appsettings.json
-/src/bg.hackathon.alphahackers.api/appsettings.Development.json
+#/src/bg.hackathon.alphahackers.api/appsettings.json
+#/src/bg.hackathon.alphahackers.api/appsettings.Development.json
